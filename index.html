@@ -1018,25 +1018,34 @@
         Don't be shy — Nathan's waiting (probably eating soup and thinking about New York).
       </p>
     </div>
-    <div class="contact-form reveal">
+    <form class="contact-form reveal"
+          action="https://formsubmit.co/nathanfwaller@gmail.com"
+          method="POST">
+
+      <!-- Formsubmit config -->
+      <input type="hidden" name="_subject" value="💘 Someone shot their shot on date-a-nathan!" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="https://maksymkutsenko.github.io/date-a-nathan/?sent=1" />
+      <input type="hidden" name="_template" value="table" />
+
       <div class="form-row">
         <div class="form-group">
-          <input type="text" id="c-name" placeholder="Your Name" />
+          <input type="text" name="name" id="c-name" placeholder="Your Name" required />
         </div>
         <div class="form-group">
-          <input type="email" placeholder="Your Email" />
+          <input type="email" name="email" placeholder="Your Email" required />
         </div>
       </div>
       <div class="form-group">
-        <input type="text" placeholder="Do you know the lyrics to Sweet Caroline? (This matters enormously.)" />
+        <input type="text" name="sweet_caroline" placeholder="Do you know the lyrics to Sweet Caroline? (This matters enormously.)" />
       </div>
       <div class="form-group">
-        <textarea placeholder="Tell Nathan something — why you're the one, a joke, your soup preference, anything really. Make it count."></textarea>
+        <textarea name="message" placeholder="Tell Nathan something — why you're the one, a joke, your soup preference, anything really. Make it count."></textarea>
       </div>
-      <button class="form-submit" id="form-btn" onclick="submitForm()">
+      <button type="submit" class="form-submit">
         Send It 💌
       </button>
-    </div>
+    </form>
   </div>
 </section>
 
@@ -1122,13 +1131,12 @@
     questions[0].classList.add('active');
   }
 
-  // ── CONTACT FORM ──────────────────────────────────────────
-  function submitForm() {
-    const name = document.getElementById('c-name').value.trim();
-    if (!name) { alert('At least tell Nathan your name! 😄'); return; }
-    const btn = document.getElementById('form-btn');
-    btn.textContent = '✅ Message sent! Nathan will be pleased.';
-    btn.disabled = true;
+  // ── THANK YOU MESSAGE (after redirect back with ?sent=1) ──
+  if (new URLSearchParams(window.location.search).get('sent') === '1') {
+    document.querySelector('#contact .section-title').insertAdjacentHTML(
+      'afterend',
+      '<p style="color:var(--gold);font-size:1.1rem;margin-top:0.8rem;">✅ Message delivered. Nathan will be pleased — and probably eating soup when he reads it.</p>'
+    );
   }
 
   // ── SCROLL REVEAL ──────────────────────────────────────────
